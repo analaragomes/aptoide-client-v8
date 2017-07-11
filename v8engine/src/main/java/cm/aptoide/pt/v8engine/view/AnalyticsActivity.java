@@ -15,18 +15,13 @@ import cm.aptoide.pt.v8engine.crashreports.CrashlyticsCrashLogger;
 import cm.aptoide.pt.v8engine.view.permission.PermissionServiceActivity;
 import lombok.Getter;
 
-/**
- * Created by neuro on 01-05-2016.
- */
-public abstract class BaseActivity extends PermissionServiceActivity {
+public abstract class AnalyticsActivity extends PermissionServiceActivity {
 
   @Getter private boolean _resumed = false;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     Analytics.Lifecycle.Activity.onCreate(this);
-    // https://fabric.io/downloads/gradle/ndk
-    // Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
 
     if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
       ((CrashlyticsCrashLogger) CrashReport.getInstance()
@@ -40,10 +35,6 @@ public abstract class BaseActivity extends PermissionServiceActivity {
           .getLanguage());
     }
 
-    setUpAnalytics();
-  }
-
-  private void setUpAnalytics() {
     Analytics.Dimensions.setGmsPresent(AdNetworkUtils.isGooglePlayServicesAvailable(this));
   }
 
